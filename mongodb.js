@@ -20,26 +20,57 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true}, (error, client) => 
     //     return console.log(result)
     // })
 
-    db.collection('users').find({ age: 23 }).toArray((error, users) => {
-        if(error) {
-            return console.log(error)
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID("620cdcb13892d9265148a9ab"),
+    // }, {
+    //     $set: {
+    //         name: 'Name 3'
+    //     }
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((err) => {
+    //     console.log(err)
+    // })
+
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID("620cdcb13892d9265148a9ab"),
+    // }, {
+    //     $inc: {
+    //         age: 10
+    //     }
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((err) => {
+    //     console.log(err)
+    // })
+
+    db.collection('movies').updateMany({
+        completed: false
+    }, {
+        $set: {
+            completed: true
         }
-        return console.log(users)
+    }).then((res) => {
+        console.log(res)
+    }).catch((error) => {
+        console.log(error)
     })
 
-    db.collection('users').find({age: 23}).count((error, count) => {
-        console.log(count)
-    })
+    // db.collection('users').deleteMany({
+    //     age: 8
+    // }).then((res) => {
+    //     console.log(res)
+    // }).catch((err) => {
+    //     console.log(err)
+    // })
 
-    db.collection('movies').findOne({_id: new ObjectID("620ce096b8299f74c96a4abe")}, (error, movie) => {
-        if(error) {
-
-        }
-        return console.log(movie)
-    })
-
-    db.collection('movies').find({ completed: true}).toArray((error, completedMovies) => {
-        console.log(completedMovies)
+    db.collection('users').deleteOne({
+        _id: new ObjectID("620a8bb5422fa3ac19867dcd")
+    }).then((res) => {
+        console.log(res)
+    }).catch((err) => {
+        console.log(err)
     })
     
+
 })
