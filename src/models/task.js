@@ -14,6 +14,8 @@ const Task = mongoose.model('Task', {
 
 })
 
+module.exports = Task
+
 // const newTask = new Task({
 //     desc: '    4th Task   '
 // })
