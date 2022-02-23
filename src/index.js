@@ -2,6 +2,7 @@ const express = require('express')
 require('./db/mongoose')
 const User = require('./models/user')
 const Task = require('./models/task')
+const ObjectId = require('mongodb').ObjectId
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -14,8 +15,32 @@ app.post('/users', (req, res) => {
     user.save().then(() => {
         res.status(201).send(user)
     }).catch((err) => {
-        res.status(400).send(err)
+        res.status(500).send(err)
     }) 
+})
+
+app.get('/users', (req, res) => {
+    User.find({}).then((users) => {
+        res.status(200).send(users)
+    }).catch((e) => {
+        res.status(404).send(e)
+    })
+})
+
+app.get('/users/:id', (req, res) => {
+    const _id = req.params.id
+    const id = new ObjectId(_id)
+
+    User.findById(id).then((user) => {
+        console.log('user', user, id)
+        if (!user) {
+            return res.status(404).send()
+        }
+        
+        res.send(user)
+    }).catch((e) => {
+        res.status(500).send()
+    })
 })
 
 app.post('/tasks', (req, res) => {
@@ -24,6 +49,30 @@ app.post('/tasks', (req, res) => {
         res.status(201).send(task)
     }).catch((err)=> {
         res.status(400).send(err)
+    })
+})
+
+app.get('/tasks', (req, res) => {
+    Task.find({}).then((tasks) => {
+        res.status(200).send(tasks)
+    }).catch((e) => {
+        res.status(404).send(e)
+    })
+})
+
+app.get('/tasks/:id', (req, res) => {
+    const _id = req.params.id
+    const id = new ObjectId(_id)
+
+    Task.findById(id).then((task) => {
+        console.log('task', task, id)
+        if (!task) {
+            return res.status(404).send()
+        }
+        
+        res.send(task)
+    }).catch((e) => {
+        res.status(500).send()
     })
 })
 
