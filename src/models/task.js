@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const Task = mongoose.model('Task', {
-    _id: { type: mongoose.Schema.Types.ObjectId },
+    //_id: { type: mongoose.Schema.Types.ObjectId },
     desc: {
         type: String,
         required: true,
