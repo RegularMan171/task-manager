@@ -45,11 +45,24 @@ router.get('/users/me', auth, async (req, res) => {
 })
 
 const upload = multer ({
-    dest:'avatars'
+    dest:'avatars',
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter(req, file, cb) {
+
+        if(!file.originalname.match(/\.(PNG|jpg|jpeg)$/)) {
+            return cb(new Error('please upload an image'))
+        }
+        cb(undefined, true)
+    }
+
 })
 //upload profile pic
 router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
     res.send()
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message})
 })
 
 //logout
